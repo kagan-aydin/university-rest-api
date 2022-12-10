@@ -19,8 +19,8 @@ public class InstructorController {
     private final InstructorService InstructorService;
 
     @GetMapping
-    public ResponseEntity<List<Instructor>> getAllInstructors(@RequestBody(required = false) String name){
-        return new ResponseEntity<>(InstructorService.getAllInstructors(name), OK);
+    public ResponseEntity<List<Instructor>> getAllInstructors(@RequestParam(required = false) String name, @RequestParam(required = false) String surname){
+        return new ResponseEntity<>(InstructorService.getAllInstructors(name, surname), OK);
     }
 
     @GetMapping("/{id}")

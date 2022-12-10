@@ -1,20 +1,25 @@
 package dev.kaganaydin.university.exception;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import org.springframework.http.HttpStatus;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.Date;
 @Data
 public class RestApiError {
-
-    private HttpStatus status;
+    @JsonIgnore
+    private HttpStatus httpStatus;
+    private Date timestamp = new Date();
+    private Integer status;
+    private String error;
     private String message;
 
-
-    public RestApiError(HttpStatus status, String message) {
+    public RestApiError(HttpStatus httpStatus, String message) {
         super();
-        this.status = status;
+        this.httpStatus = httpStatus;
+        this.status = httpStatus.value();
+        this.error = httpStatus.getReasonPhrase();
         this.message = message;
     }
+
 }

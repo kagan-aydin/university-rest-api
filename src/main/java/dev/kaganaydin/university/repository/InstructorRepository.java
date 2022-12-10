@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface InstructorRepository extends JpaRepository<Instructor, Long> {
     List<Instructor> findByName(String name);
+    List<Instructor> findBySurname(String surname);
+    List<Instructor> findByNameAndSurname(String name, String surname);
 }

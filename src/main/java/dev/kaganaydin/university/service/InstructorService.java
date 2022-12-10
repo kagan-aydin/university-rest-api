@@ -14,23 +14,27 @@ import java.util.List;
 @AllArgsConstructor
 public class InstructorService {
 
-    private final InstructorRepository InstructorRepository;
+    private final InstructorRepository instructorRepository;
 
-    public List<Instructor> getAllInstructors(String name) {
-        if (name == null){
-            return InstructorRepository.findAll();
+    public List<Instructor> getAllInstructors(String name, String surname) {
+        if (name == null && surname == null){
+            return instructorRepository.findAll();
+        } else if (name != null && surname == null) {
+            return instructorRepository.findByName(name);
+        } else if (name == null && surname != null) {
+            return instructorRepository.findBySurname(surname);
         } else {
-            return InstructorRepository.findByName(name);
+            return instructorRepository.findByNameAndSurname(name, surname);
         }
     }
 	
     public Instructor getInstructorById(Long id) {
-        return InstructorRepository.findById(id)
+        return instructorRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Instructor not found!"));
     }
 
     public Instructor addInstructor(Instructor newInstructor) {
-        Instructor instructor = InstructorRepository.save(newInstructor);
+        Instructor instructor = instructorRepository.save(newInstructor);
         return instructor;
     }
 	
@@ -38,12 +42,12 @@ public class InstructorService {
         Instructor oldInstructor = getInstructorById(id);
         newInstructor.setId(oldInstructor.getId());
         newInstructor.setUpdateDate(new Date());
-        InstructorRepository.save(newInstructor);
+        instructorRepository.save(newInstructor);
     }
 
     public void deleteInstructor(Long id) {
         Instructor instructor = getInstructorById(id);
         instructor.setDeleteDate(new Date());
-        InstructorRepository.save(instructor);
+        instructorRepository.save(instructor);
     }
 }
