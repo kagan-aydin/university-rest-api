@@ -1,15 +1,14 @@
 package dev.kaganaydin.university.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Where;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
+import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 import static javax.persistence.GenerationType.SEQUENCE;
 
@@ -32,6 +31,9 @@ public class Instructor {
     private String name;
     private String surname;
     private String rank;
+    @OneToMany
+    @JoinColumn(name="instructor_id")
+    private List<Course> courses;
     private Date createDate = new Date();
     private Date updateDate;
     private Date deleteDate;

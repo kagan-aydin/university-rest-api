@@ -14,6 +14,7 @@ import java.util.List;
 public class CourseService {
 
     private final CourseRepository CourseRepository;
+    private final InstructorService instructorService;
 
     public List<Course> getAllCourses(String name) {
         if (name == null){
@@ -32,7 +33,7 @@ public class CourseService {
         Course course = CourseRepository.save(newCourse);
         return course;
     }
-	
+
     public void updateCourse(Long id, Course newCourse){
         Course oldCourse = getCourseById(id);
         newCourse.setId(oldCourse.getId());

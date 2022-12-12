@@ -30,8 +30,8 @@ public class CourseController {
 
     @PostMapping
     public ResponseEntity<Course> addCourse(@RequestBody Course newCourse) {
-        courseService.addCourse(newCourse);
-        return new ResponseEntity<>(newCourse,CREATED);
+        Course course = courseService.addCourse(newCourse);
+        return new ResponseEntity<>(course,CREATED);
     }
 
     @PutMapping("/{id}")
