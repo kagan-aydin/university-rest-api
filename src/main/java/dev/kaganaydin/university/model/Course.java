@@ -35,8 +35,15 @@ public class Course {
     @ManyToOne(
             fetch = FetchType.LAZY
     )
-    @JoinColumn(name="instructor_id", insertable = false, updatable = false)
+    @JoinColumn(name="instructor_id", nullable = false, insertable = false, updatable = false)
     private Instructor instructor;
+    @JsonIgnore
+    @ManyToMany
+    @JoinTable(
+            name = "course_student",
+            joinColumns = @JoinColumn(name = "student_id"),
+            inverseJoinColumns = @JoinColumn(name = "course_id"))
+    private List<Student> students;
     private Long instructor_id;
     private Date createDate = new Date();
     private Date updateDate;

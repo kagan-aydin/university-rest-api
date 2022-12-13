@@ -31,10 +31,10 @@ public class Instructor {
     private String name;
     private String surname;
     private String rank;
-    @OneToMany
-    @JoinColumn(name="instructor_id")
+    @OneToMany(mappedBy = "instructor")
     private List<Course> courses;
     private Date createDate = new Date();
     private Date updateDate;
     private Date deleteDate;
 }
+//@JoinColumn(name="instructor_id")

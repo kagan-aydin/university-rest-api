@@ -1,6 +1,8 @@
 package dev.kaganaydin.university.service;
 
+import dev.kaganaydin.university.dto.CourseStudentDto;
 import dev.kaganaydin.university.model.Course;
+import dev.kaganaydin.university.model.Student;
 import dev.kaganaydin.university.repository.CourseRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -13,24 +15,25 @@ import java.util.List;
 @AllArgsConstructor
 public class CourseService {
 
-    private final CourseRepository CourseRepository;
+    private final CourseRepository courseRepository;
     private final InstructorService instructorService;
+    private final StudentService studentService;
 
     public List<Course> getAllCourses(String name) {
         if (name == null){
-            return CourseRepository.findAll();
+            return courseRepository.findAll();
         } else {
-            return CourseRepository.findByName(name);
+            return courseRepository.findByName(name);
         }
     }
 	
     public Course getCourseById(Long id) {
-        return CourseRepository.findById(id)
+        return courseRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Course not found!"));
     }
 
     public Course addCourse(Course newCourse) {
-        Course course = CourseRepository.save(newCourse);
+        Course course = courseRepository.save(newCourse);
         return course;
     }
 
@@ -38,12 +41,28 @@ public class CourseService {
         Course oldCourse = getCourseById(id);
         newCourse.setId(oldCourse.getId());
         newCourse.setUpdateDate(new Date());
-        CourseRepository.save(newCourse);
+        courseRepository.save(newCourse);
     }
 
     public void deleteCourse(Long id) {
         Course course = getCourseById(id);
         course.setDeleteDate(new Date());
-        CourseRepository.save(course);
+        courseRepository.save(course);
+    }
+    public void addStudentToCourse(CourseStudentDto courseStudentDto) {
+        Course course = getCourseById(courseStudentDto.getCourseId());
+        Student student = studentService.getStudentById(courseStudentDto.getStudentId());
+        course.getStudents().add(student);
+        courseRepository.save(course);
+    }
+
+    public void deleteStudentFromCourse(CourseStudentDto courseStudentDto) {
+        Course course = getCourseById(courseStudentDto.getCourseId());
+        Student student = studentService.getStudentById(courseStudentDto.getStudentId());
+        Student result = course.getStudents().stream().filter(st -> st.getId() == student.getId())
+                .findFirst()
+                .orElseThrow(() -> new EntityNotFoundException("Student not found for this course!"));
+        course.getStudents().remove(student);
+        courseRepository.save(course);
     }
 }

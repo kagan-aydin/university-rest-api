@@ -30,6 +30,8 @@ public class Student {
     private String name;
     private String surname;
     private Integer department;
+    @ManyToMany(mappedBy = "students")
+    private List<Course> courses;
     private Date createDate = new Date();
     private Date updateDate;
     private Date deleteDate;

@@ -10,8 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static org.springframework.http.HttpStatus.CREATED;
-import static org.springframework.http.HttpStatus.OK;
+import static org.springframework.http.HttpStatus.*;
 
 @RestController
 @RequestMapping("/courses")
@@ -47,5 +46,15 @@ public class CourseController {
         courseService.deleteCourse(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+    @PostMapping("/students")
+    public ResponseEntity<Void> addStudentToCourse(@RequestBody CourseStudentDto courseStudentDto) {
+        courseService.addStudentToCourse(courseStudentDto);
+        return new ResponseEntity<>(CREATED);
+    }
 
+    @DeleteMapping("/students")
+    public ResponseEntity<Void> deleteStudentFromCourse(@RequestBody CourseStudentDto courseStudentDto) {
+        courseService.deleteStudentFromCourse(courseStudentDto);
+        return new ResponseEntity<>(NO_CONTENT);
+    }
 }
