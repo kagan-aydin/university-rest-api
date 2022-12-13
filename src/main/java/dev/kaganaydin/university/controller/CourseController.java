@@ -1,8 +1,10 @@
 package dev.kaganaydin.university.controller;
 
+import dev.kaganaydin.university.dto.CourseStudentDto;
 import dev.kaganaydin.university.model.Course;
 import dev.kaganaydin.university.service.CourseService;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -43,6 +45,7 @@ public class CourseController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteCourse(@PathVariable Long id) {
         courseService.deleteCourse(id);
-        return new ResponseEntity<>(OK);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
 }

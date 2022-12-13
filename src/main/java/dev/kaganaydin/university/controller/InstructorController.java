@@ -16,34 +16,34 @@ import static org.springframework.http.HttpStatus.*;
 @AllArgsConstructor
 public class InstructorController {
 
-    private final InstructorService InstructorService;
+    private final InstructorService instructorService;
 
     @GetMapping
     public ResponseEntity<List<Instructor>> getAllInstructors(@RequestParam(required = false) String name, @RequestParam(required = false) String surname){
-        return new ResponseEntity<>(InstructorService.getAllInstructors(name, surname), OK);
+        return new ResponseEntity<>(instructorService.getAllInstructors(name, surname), OK);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Instructor> getInstructorById(@PathVariable("id") Long id) {
-        return new ResponseEntity<>(InstructorService.getInstructorById(id),OK);
+        return new ResponseEntity<>(instructorService.getInstructorById(id),OK);
     }
 
     @PostMapping
     public ResponseEntity<Instructor> addInstructor(@RequestBody Instructor newInstructor) {
-        InstructorService.addInstructor(newInstructor);
+        instructorService.addInstructor(newInstructor);
         return new ResponseEntity<>(newInstructor,CREATED);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<Instructor> updateInstructor(@PathVariable Long id, @RequestBody Instructor newInstructor) {
-        InstructorService.updateInstructor(id, newInstructor);
+        instructorService.updateInstructor(id, newInstructor);
         return new ResponseEntity<>(newInstructor,OK);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteInstructor(@PathVariable Long id) {
-        InstructorService.deleteInstructor(id);
-        return new ResponseEntity<>(OK);
+        instructorService.deleteInstructor(id);
+        return new ResponseEntity<>(NO_CONTENT);
     }
 
 }
