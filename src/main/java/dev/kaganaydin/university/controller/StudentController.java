@@ -29,8 +29,8 @@ public class StudentController {
 
     @PostMapping
     public ResponseEntity<Student> addStudent(@RequestBody Student newStudent) {
-        studentService.addStudent(newStudent);
-        return new ResponseEntity<>(newStudent,CREATED);
+        Student student = studentService.addStudent(newStudent);
+        return new ResponseEntity<>(student,CREATED);
     }
 
     @PutMapping("/{id}")

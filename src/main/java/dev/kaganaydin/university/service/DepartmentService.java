@@ -29,8 +29,7 @@ public class DepartmentService {
     }
 
     public Department addDepartment(Department newDepartment) {
-        Department department = departmentRepository.save(newDepartment);
-        return department;
+        return departmentRepository.save(newDepartment);
     }
 	
     public void updateDepartment(Integer id, Department newDepartment){

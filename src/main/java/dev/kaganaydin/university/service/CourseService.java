@@ -36,8 +36,7 @@ public class CourseService {
 
     public Course addCourse(Course newCourse) {
         instructorService.getInstructorById(newCourse.getInstructor_id());
-        Course course = courseRepository.save(newCourse);
-        return course;
+        return courseRepository.save(newCourse);
     }
 
     public void updateCourse(Long id, Course newCourse){
@@ -66,7 +65,7 @@ public class CourseService {
     public void deleteStudentFromCourse(CourseStudentDto courseStudentDto) {
         Course course = getCourseById(courseStudentDto.getCourseId());
         Student student = studentService.getStudentById(courseStudentDto.getStudentId());
-        Student result = course.getStudents().stream().filter(st -> st.getId() == student.getId())
+        Student result = course.getStudents().stream().filter(st -> st.getId().equals(student.getId()))
                 .findFirst()
                 .orElseThrow(() -> new EntityNotFoundException("Student not found for this course!"));
         course.getStudents().remove(student);

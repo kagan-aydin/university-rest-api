@@ -30,8 +30,8 @@ public class InstructorController {
 
     @PostMapping
     public ResponseEntity<Instructor> addInstructor(@RequestBody Instructor newInstructor) {
-        instructorService.addInstructor(newInstructor);
-        return new ResponseEntity<>(newInstructor,CREATED);
+        Instructor instructor = instructorService.addInstructor(newInstructor);
+        return new ResponseEntity<>(instructor,CREATED);
     }
 
     @PutMapping("/{id}")
