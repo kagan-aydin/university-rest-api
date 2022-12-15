@@ -31,6 +31,12 @@ public class Instructor {
     private String name;
     private String surname;
     private String rank;
+    @ManyToOne(
+            fetch = FetchType.LAZY
+    )
+    @JoinColumn(name="department_id", nullable = false, insertable = false, updatable = false)
+    private Department department;
+    private Integer department_id;
     @OneToMany(mappedBy = "instructor")
     private List<Course> courses;
     private Date createDate = new Date();

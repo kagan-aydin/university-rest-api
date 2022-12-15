@@ -46,6 +46,7 @@ public class CourseController {
         courseService.deleteCourse(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
     @PostMapping("/students")
     public ResponseEntity<Void> addStudentToCourse(@RequestBody CourseStudentDto courseStudentDto) {
         courseService.addStudentToCourse(courseStudentDto);

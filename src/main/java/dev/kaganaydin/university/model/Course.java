@@ -31,20 +31,29 @@ public class Course {
     private String code;
     private String name;
     private Integer credit;
+    @ManyToOne(
+            fetch = FetchType.LAZY
+    )
+    @JoinColumn(name="department_id", nullable = false, insertable = false, updatable = false)
+    private Department department;
+    private Integer department_id;
     @JsonIgnore
     @ManyToOne(
             fetch = FetchType.LAZY
     )
     @JoinColumn(name="instructor_id", nullable = false, insertable = false, updatable = false)
     private Instructor instructor;
+    private Long instructor_id;
     @JsonIgnore
     @ManyToMany
     @JoinTable(
             name = "course_student",
             joinColumns = @JoinColumn(name = "student_id"),
-            inverseJoinColumns = @JoinColumn(name = "course_id"))
+            inverseJoinColumns = @JoinColumn(name = "course_id"),
+            uniqueConstraints = @UniqueConstraint(columnNames = {"course_id", "student_id"})
+    )
     private List<Student> students;
-    private Long instructor_id;
+    private String rank;
     private Date createDate = new Date();
     private Date updateDate;
     private Date deleteDate;

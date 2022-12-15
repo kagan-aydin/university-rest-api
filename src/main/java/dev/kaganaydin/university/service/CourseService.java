@@ -5,8 +5,10 @@ import dev.kaganaydin.university.model.Course;
 import dev.kaganaydin.university.model.Student;
 import dev.kaganaydin.university.repository.CourseRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityExistsException;
 import javax.persistence.EntityNotFoundException;
 import java.util.Date;
 import java.util.List;
@@ -33,6 +35,7 @@ public class CourseService {
     }
 
     public Course addCourse(Course newCourse) {
+        instructorService.getInstructorById(newCourse.getInstructor_id());
         Course course = courseRepository.save(newCourse);
         return course;
     }
@@ -53,7 +56,11 @@ public class CourseService {
         Course course = getCourseById(courseStudentDto.getCourseId());
         Student student = studentService.getStudentById(courseStudentDto.getStudentId());
         course.getStudents().add(student);
-        courseRepository.save(course);
+        try {
+            courseRepository.save(course);
+        } catch (DataIntegrityViolationException e) {
+            throw new EntityExistsException("Student has been already added to this course!");
+        }
     }
 
     public void deleteStudentFromCourse(CourseStudentDto courseStudentDto) {

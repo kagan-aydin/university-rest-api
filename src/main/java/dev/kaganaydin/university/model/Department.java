@@ -1,5 +1,6 @@
 package dev.kaganaydin.university.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,27 +17,27 @@ import static javax.persistence.GenerationType.SEQUENCE;
 @NoArgsConstructor
 @AllArgsConstructor
 @Where(clause="delete_date is null")
-public class Student {
+public class Department {
     @Id
     @SequenceGenerator(
-            name = "student_sequence",
-            sequenceName = "student_sequence"
+            name = "department_sequence",
+            sequenceName = "department_sequence"
     )
     @GeneratedValue(
             strategy = SEQUENCE,
-            generator = "student_sequence"
+            generator = "department_sequence"
     )
-    private Long id;
+    private Integer id;
     private String name;
-    private String surname;
-    @ManyToOne(
-            fetch = FetchType.LAZY
-    )
-    @JoinColumn(name="department_id", nullable = false, insertable = false, updatable = false)
-    private Department department;
-    private Integer department_id;
-    @ManyToMany(mappedBy = "students")
-    private List<Course> courses;
+    @JsonIgnore
+    @OneToMany(mappedBy = "department")
+    private List<Instructor> instructors;
+    @JsonIgnore
+    @OneToMany(mappedBy = "department")
+    private List<Student> students;
+    @JsonIgnore
+    @OneToMany(mappedBy = "department")
+    private List<Student> courses;
     private Date createDate = new Date();
     private Date updateDate;
     private Date deleteDate;
