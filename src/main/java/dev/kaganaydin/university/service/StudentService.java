@@ -45,8 +45,7 @@ public class StudentService {
     }
 
     public void deleteStudent(Long id) {
-        Student student = getStudentById(id);
-        student.setDeleteDate(new Date());
-        studentRepository.save(student);
+        getStudentById(id);
+        studentRepository.deleteById(id);
     }
 }

@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 import static org.springframework.http.HttpStatus.*;
@@ -28,13 +29,13 @@ public class StudentController {
     }
 
     @PostMapping
-    public ResponseEntity<Student> addStudent(@RequestBody Student newStudent) {
+    public ResponseEntity<Student> addStudent(@RequestBody @Valid Student newStudent) {
         Student student = studentService.addStudent(newStudent);
         return new ResponseEntity<>(student,CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Student> updateStudent(@PathVariable Long id, @RequestBody Student newStudent) {
+    public ResponseEntity<Student> updateStudent(@PathVariable Long id, @RequestBody @Valid Student newStudent) {
         studentService.updateStudent(id, newStudent);
         return new ResponseEntity<>(newStudent,OK);
     }

@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 import static org.springframework.http.HttpStatus.*;
@@ -29,13 +30,13 @@ public class InstructorController {
     }
 
     @PostMapping
-    public ResponseEntity<Instructor> addInstructor(@RequestBody Instructor newInstructor) {
+    public ResponseEntity<Instructor> addInstructor(@RequestBody @Valid Instructor newInstructor) {
         Instructor instructor = instructorService.addInstructor(newInstructor);
         return new ResponseEntity<>(instructor,CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Instructor> updateInstructor(@PathVariable Long id, @RequestBody Instructor newInstructor) {
+    public ResponseEntity<Instructor> updateInstructor(@PathVariable Long id, @RequestBody @Valid Instructor newInstructor) {
         instructorService.updateInstructor(id, newInstructor);
         return new ResponseEntity<>(newInstructor,OK);
     }

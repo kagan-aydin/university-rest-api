@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 import static org.springframework.http.HttpStatus.*;
@@ -30,13 +31,13 @@ public class CourseController {
     }
 
     @PostMapping
-    public ResponseEntity<Course> addCourse(@RequestBody Course newCourse) {
+    public ResponseEntity<Course> addCourse(@RequestBody @Valid Course newCourse) {
         Course course = courseService.addCourse(newCourse);
         return new ResponseEntity<>(course,CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Course> updateCourse(@PathVariable Long id, @RequestBody Course newCourse) {
+    public ResponseEntity<Course> updateCourse(@PathVariable Long id, @RequestBody @Valid Course newCourse) {
         courseService.updateCourse(id, newCourse);
         return new ResponseEntity<>(newCourse,OK);
     }
@@ -48,13 +49,13 @@ public class CourseController {
     }
 
     @PostMapping("/students")
-    public ResponseEntity<Void> addStudentToCourse(@RequestBody CourseStudentDto courseStudentDto) {
+    public ResponseEntity<Void> addStudentToCourse(@RequestBody @Valid CourseStudentDto courseStudentDto) {
         courseService.addStudentToCourse(courseStudentDto);
         return new ResponseEntity<>(CREATED);
     }
 
     @DeleteMapping("/students")
-    public ResponseEntity<Void> deleteStudentFromCourse(@RequestBody CourseStudentDto courseStudentDto) {
+    public ResponseEntity<Void> deleteStudentFromCourse(@RequestBody @Valid CourseStudentDto courseStudentDto) {
         courseService.deleteStudentFromCourse(courseStudentDto);
         return new ResponseEntity<>(NO_CONTENT);
     }

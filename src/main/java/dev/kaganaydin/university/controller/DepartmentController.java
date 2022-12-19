@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 import static org.springframework.http.HttpStatus.*;
@@ -28,13 +29,13 @@ public class DepartmentController {
     }
 
     @PostMapping
-    public ResponseEntity<Department> addDepartment(@RequestBody Department newDepartment) {
+    public ResponseEntity<Department> addDepartment(@RequestBody @Valid Department newDepartment) {
         Department department = departmentService.addDepartment(newDepartment);
         return new ResponseEntity<>(department,CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Department> updateDepartment(@PathVariable Integer id, @RequestBody Department newDepartment) {
+    public ResponseEntity<Department> updateDepartment(@PathVariable Integer id, @RequestBody @Valid Department newDepartment) {
         departmentService.updateDepartment(id, newDepartment);
         return new ResponseEntity<>(newDepartment,OK);
     }

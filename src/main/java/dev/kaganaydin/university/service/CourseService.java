@@ -35,7 +35,7 @@ public class CourseService {
     }
 
     public Course addCourse(Course newCourse) {
-        instructorService.getInstructorById(newCourse.getInstructor_id());
+        instructorService.getInstructorById(newCourse.getInstructorId());
         return courseRepository.save(newCourse);
     }
 
@@ -47,9 +47,8 @@ public class CourseService {
     }
 
     public void deleteCourse(Long id) {
-        Course course = getCourseById(id);
-        course.setDeleteDate(new Date());
-        courseRepository.save(course);
+        getCourseById(id);
+        courseRepository.deleteById(id);
     }
     public void addStudentToCourse(CourseStudentDto courseStudentDto) {
         Course course = getCourseById(courseStudentDto.getCourseId());

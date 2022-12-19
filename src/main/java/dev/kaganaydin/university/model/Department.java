@@ -4,9 +4,11 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.List;
 
@@ -16,6 +18,7 @@ import static javax.persistence.GenerationType.SEQUENCE;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
+@SQLDelete(sql = "UPDATE department SET delete_date = current_timestamp WHERE id=?")
 @Where(clause="delete_date is null")
 public class Department {
     @Id
@@ -28,6 +31,7 @@ public class Department {
             generator = "department_sequence"
     )
     private Integer id;
+    @NotNull(message = "Name is required!")
     private String name;
     @JsonIgnore
     @OneToMany(mappedBy = "department")

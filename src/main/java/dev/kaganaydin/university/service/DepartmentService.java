@@ -40,8 +40,7 @@ public class DepartmentService {
     }
 
     public void deleteDepartment(Integer id) {
-        Department department = getDepartmentById(id);
-        department.setDeleteDate(new Date());
-        departmentRepository.save(department);
+        getDepartmentById(id);
+        departmentRepository.deleteById(id);
     }
 }

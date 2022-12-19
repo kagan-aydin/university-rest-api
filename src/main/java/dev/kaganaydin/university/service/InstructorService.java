@@ -46,8 +46,7 @@ public class InstructorService {
     }
 
     public void deleteInstructor(Long id) {
-        Instructor instructor = getInstructorById(id);
-        instructor.setDeleteDate(new Date());
-        instructorRepository.save(instructor);
+        getInstructorById(id);
+        instructorRepository.deleteById(id);
     }
 }

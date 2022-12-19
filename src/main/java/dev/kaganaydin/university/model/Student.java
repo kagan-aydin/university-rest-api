@@ -3,9 +3,11 @@ package dev.kaganaydin.university.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.List;
 
@@ -15,6 +17,7 @@ import static javax.persistence.GenerationType.SEQUENCE;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
+@SQLDelete(sql = "UPDATE student SET delete_date = current_timestamp WHERE id=?")
 @Where(clause="delete_date is null")
 public class Student {
     @Id
@@ -27,14 +30,17 @@ public class Student {
             generator = "student_sequence"
     )
     private Long id;
+    @NotNull(message = "Name is required!")
     private String name;
+    @NotNull(message = "Surname is required!")
     private String surname;
     @ManyToOne(
             fetch = FetchType.LAZY
     )
-    @JoinColumn(name="department_id", nullable = false, insertable = false, updatable = false)
+    @JoinColumn(name="departmentId", nullable = false, insertable = false, updatable = false)
     private Department department;
-    private Integer department_id;
+    @NotNull(message = "Department Id is required!")
+    private Integer departmentId;
     @ManyToMany(mappedBy = "students")
     private List<Course> courses;
     private Date createDate = new Date();
