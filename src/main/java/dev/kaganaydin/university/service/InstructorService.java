@@ -15,13 +15,13 @@ import java.util.List;
 public class InstructorService {
 
     private final InstructorRepository instructorRepository;
-
+    private DepartmentService departmentService;
     public List<Instructor> getAllInstructors(String name, String surname) {
         if (name == null && surname == null){
             return instructorRepository.findAll();
         } else if (name != null && surname == null) {
             return instructorRepository.findByName(name);
-        } else if (name == null && surname != null) {
+        } else if (name == null) {
             return instructorRepository.findBySurname(surname);
         } else {
             return instructorRepository.findByNameAndSurname(name, surname);
@@ -34,8 +34,8 @@ public class InstructorService {
     }
 
     public Instructor addInstructor(Instructor newInstructor) {
-        Instructor instructor = instructorRepository.save(newInstructor);
-        return instructor;
+        departmentService.getDepartmentById(newInstructor.getDepartmentId());
+        return instructorRepository.save(newInstructor);
     }
 	
     public void updateInstructor(Long id, Instructor newInstructor){

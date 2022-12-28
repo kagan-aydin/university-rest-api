@@ -5,6 +5,7 @@ import dev.kaganaydin.university.model.Course;
 import dev.kaganaydin.university.model.Student;
 import dev.kaganaydin.university.repository.CourseRepository;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +16,7 @@ import java.util.List;
 
 @Service
 @AllArgsConstructor
+@Slf4j
 public class CourseService {
 
     private final CourseRepository courseRepository;
@@ -36,7 +38,9 @@ public class CourseService {
 
     public Course addCourse(Course newCourse) {
         instructorService.getInstructorById(newCourse.getInstructorId());
-        return courseRepository.save(newCourse);
+        Course course = courseRepository.save(newCourse);
+        log.debug("Course added with id:{}",course.getId());
+        return course;
     }
 
     public void updateCourse(Long id, Course newCourse){
@@ -44,11 +48,13 @@ public class CourseService {
         newCourse.setId(oldCourse.getId());
         newCourse.setUpdateDate(new Date());
         courseRepository.save(newCourse);
+        log.debug("Course updated with id:{}",id);
     }
 
     public void deleteCourse(Long id) {
         getCourseById(id);
         courseRepository.deleteById(id);
+        log.debug("Course deleted with id:{}",id);
     }
     public void addStudentToCourse(CourseStudentDto courseStudentDto) {
         Course course = getCourseById(courseStudentDto.getCourseId());
@@ -56,6 +62,7 @@ public class CourseService {
         course.getStudents().add(student);
         try {
             courseRepository.save(course);
+            log.debug("Student with id:{} added to course with id:{}",courseStudentDto.getStudentId(),courseStudentDto.getCourseId());
         } catch (DataIntegrityViolationException e) {
             throw new EntityExistsException("Student has been already added to this course!");
         }
@@ -69,5 +76,6 @@ public class CourseService {
                 .orElseThrow(() -> new EntityNotFoundException("Student not found for this course!"));
         course.getStudents().remove(student);
         courseRepository.save(course);
+        log.debug("Student with id:{} deleted from course with id:{}",courseStudentDto.getStudentId(),courseStudentDto.getCourseId());
     }
 }

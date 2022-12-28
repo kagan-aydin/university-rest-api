@@ -20,7 +20,7 @@ public class StudentService {
             return studentRepository.findAll();
         } else if (name != null && surname == null) {
             return studentRepository.findByName(name);
-        } else if (name == null && surname != null) {
+        } else if (name == null) {
             return studentRepository.findBySurname(surname);
         } else {
             return studentRepository.findByNameAndSurname(name, surname);
@@ -33,8 +33,7 @@ public class StudentService {
     }
 
     public Student addStudent(Student newStudent) {
-        Student student = studentRepository.save(newStudent);
-        return student;
+        return studentRepository.save(newStudent);
     }
 	
     public void updateStudent(Long id, Student newStudent){
