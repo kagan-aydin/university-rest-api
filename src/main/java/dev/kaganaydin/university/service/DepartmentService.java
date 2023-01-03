@@ -1,8 +1,10 @@
 package dev.kaganaydin.university.service;
 
+import dev.kaganaydin.university.model.Course;
 import dev.kaganaydin.university.model.Department;
 import dev.kaganaydin.university.repository.DepartmentRepository;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
@@ -11,6 +13,7 @@ import java.util.List;
 
 @Service
 @AllArgsConstructor
+@Slf4j
 public class DepartmentService {
 
     private final DepartmentRepository departmentRepository;
@@ -29,7 +32,9 @@ public class DepartmentService {
     }
 
     public Department addDepartment(Department newDepartment) {
-        return departmentRepository.save(newDepartment);
+        Department department = departmentRepository.save(newDepartment);
+        log.debug("Department added with id:{}",department.getId());
+        return department;
     }
 	
     public void updateDepartment(Integer id, Department newDepartment){
@@ -37,10 +42,12 @@ public class DepartmentService {
         newDepartment.setId(oldDepartment.getId());
         newDepartment.setUpdateDate(new Date());
         departmentRepository.save(newDepartment);
+        log.debug("Department with id:{} updated",id);
     }
 
     public void deleteDepartment(Integer id) {
         getDepartmentById(id);
         departmentRepository.deleteById(id);
+        log.debug("Department with id:{} deleted",id);
     }
 }

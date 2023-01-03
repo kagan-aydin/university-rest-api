@@ -1,9 +1,11 @@
 package dev.kaganaydin.university.service;
 
+import dev.kaganaydin.university.model.Department;
 import dev.kaganaydin.university.model.Instructor;
 import dev.kaganaydin.university.repository.InstructorRepository;
 import lombok.AllArgsConstructor;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
@@ -12,6 +14,7 @@ import java.util.List;
 
 @Service
 @AllArgsConstructor
+@Slf4j
 public class InstructorService {
 
     private final InstructorRepository instructorRepository;
@@ -35,7 +38,9 @@ public class InstructorService {
 
     public Instructor addInstructor(Instructor newInstructor) {
         departmentService.getDepartmentById(newInstructor.getDepartmentId());
-        return instructorRepository.save(newInstructor);
+        Instructor instructor = instructorRepository.save(newInstructor);
+        log.debug("Instructor added with id:{}",instructor.getId());
+        return instructor;
     }
 	
     public void updateInstructor(Long id, Instructor newInstructor){
@@ -43,10 +48,12 @@ public class InstructorService {
         newInstructor.setId(oldInstructor.getId());
         newInstructor.setUpdateDate(new Date());
         instructorRepository.save(newInstructor);
+        log.debug("Instructor with id:{} updated",id);
     }
 
     public void deleteInstructor(Long id) {
         getInstructorById(id);
         instructorRepository.deleteById(id);
+        log.debug("Instructor with id:{} deleted",id);
     }
 }

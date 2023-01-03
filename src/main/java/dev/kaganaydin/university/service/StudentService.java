@@ -1,8 +1,10 @@
 package dev.kaganaydin.university.service;
 
+import dev.kaganaydin.university.model.Instructor;
 import dev.kaganaydin.university.model.Student;
 import dev.kaganaydin.university.repository.StudentRepository;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
@@ -11,6 +13,7 @@ import java.util.List;
 
 @Service
 @AllArgsConstructor
+@Slf4j
 public class StudentService {
 
     private final StudentRepository studentRepository;
@@ -33,7 +36,9 @@ public class StudentService {
     }
 
     public Student addStudent(Student newStudent) {
-        return studentRepository.save(newStudent);
+        Student student = studentRepository.save(newStudent);
+        log.debug("Student added with id:{}",student.getId());
+        return student;
     }
 	
     public void updateStudent(Long id, Student newStudent){
@@ -41,10 +46,12 @@ public class StudentService {
         newStudent.setId(oldStudent.getId());
         newStudent.setUpdateDate(new Date());
         studentRepository.save(newStudent);
+        log.debug("Student with id:{} updated",id);
     }
 
     public void deleteStudent(Long id) {
         getStudentById(id);
         studentRepository.deleteById(id);
+        log.debug("Student with id:{} deleted",id);
     }
 }

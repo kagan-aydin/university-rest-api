@@ -48,13 +48,13 @@ public class CourseService {
         newCourse.setId(oldCourse.getId());
         newCourse.setUpdateDate(new Date());
         courseRepository.save(newCourse);
-        log.debug("Course updated with id:{}",id);
+        log.debug("Course with id:{} updated ",id);
     }
 
     public void deleteCourse(Long id) {
         getCourseById(id);
         courseRepository.deleteById(id);
-        log.debug("Course deleted with id:{}",id);
+        log.debug("Course with id:{} deleted",id);
     }
     public void addStudentToCourse(CourseStudentDto courseStudentDto) {
         Course course = getCourseById(courseStudentDto.getCourseId());
