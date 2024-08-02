@@ -2,8 +2,8 @@ version: '1'
 
 services:
   api:
-    image: 'api'
-    container_name: 'api'
+    image: 'university-api'
+    container_name: 'university-api'
     ports:
       - 8080:8080
     environment:
@@ -15,7 +15,7 @@ services:
 
   db:
     image: 'postgres:13.1-alpine'
-    container_name: 'db'
+    container_name: 'university-db'
     ports:
       - 5432:5432
     environment:
