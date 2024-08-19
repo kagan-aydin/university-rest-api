@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: university-api-deployment
+  labels:
+    app: university-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: university-api
+  template:
+    metadata:
+      labels:
+        app: university-api
+    spec:
+      containers:
+        - name: university-api
+          image: kaganaydin/public:university-api
+          ports:
+            - containerPort: 8080
+          env:
+            - name: SPRING_DATASOURCE_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: postgres-cm
+                  key: database-url
+            - name: SPRING_DATASOURCE_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secret
+                  key: postgres-username
+            - name: SPRING_DATASOURCE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secret
+                  key: postgres-password
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: university-api-service
+spec:
+  selector:
+    app: university-api
+  type: LoadBalancer
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+      nodePort: 30001
+
+
