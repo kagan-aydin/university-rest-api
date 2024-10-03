@@ -18,10 +18,6 @@ public class StudentController {
 
     private final StudentService studentService;
 
-    public StudentController(StudentService studentService) {
-        this.studentService = studentService;
-    }
-
     @GetMapping
     public ResponseEntity<List<Student>> getAllStudents(@RequestParam(required = false) String name, @RequestParam(required = false) String surname){
         return new ResponseEntity<>(studentService.getAllStudents(name, surname), OK);

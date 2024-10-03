@@ -1,6 +1,5 @@
 package dev.kaganaydin.university.service;
 
-import dev.kaganaydin.university.model.Instructor;
 import dev.kaganaydin.university.model.Student;
 import dev.kaganaydin.university.repository.StudentRepository;
 import lombok.AllArgsConstructor;

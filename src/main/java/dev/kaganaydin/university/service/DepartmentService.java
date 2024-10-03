@@ -1,6 +1,5 @@
 package dev.kaganaydin.university.service;
 
-import dev.kaganaydin.university.model.Course;
 import dev.kaganaydin.university.model.Department;
 import dev.kaganaydin.university.repository.DepartmentRepository;
 import lombok.AllArgsConstructor;
@@ -17,10 +16,6 @@ import java.util.List;
 public class DepartmentService {
 
     private final DepartmentRepository departmentRepository;
-
-    public DepartmentService(DepartmentRepository departmentRepository) {
-        this.departmentRepository = departmentRepository;
-    }
 
     public List<Department> getAllDepartments(String name) {
         if (name == null){

@@ -18,10 +18,6 @@ public class DepartmentController {
 
     private final DepartmentService departmentService;
 
-    public DepartmentController(DepartmentService departmentService) {
-        this.departmentService = departmentService;
-    }
-
     @GetMapping
     public ResponseEntity<List<Department>> getAllDepartments(@RequestParam(required = false) String name){
         return new ResponseEntity<>(departmentService.getAllDepartments(name), OK);

@@ -34,6 +34,8 @@ public class Student {
     private String name;
     @NotNull(message = "Surname is required!")
     private String surname;
+    @NotNull(message = "Email is required!")
+    private String email;
     @ManyToOne(
             fetch = FetchType.LAZY
     )
