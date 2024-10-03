@@ -23,6 +23,12 @@ public class CourseService {
     private final InstructorService instructorService;
     private final StudentService studentService;
 
+    public CourseService(CourseRepository courseRepository, InstructorService instructorService, StudentService studentService) {
+        this.courseRepository = courseRepository;
+        this.instructorService = instructorService;
+        this.studentService = studentService;
+    }
+
     public List<Course> getAllCourses(String name) {
         if (name == null){
             return courseRepository.findAll();

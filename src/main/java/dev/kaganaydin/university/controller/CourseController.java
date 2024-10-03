@@ -20,6 +20,10 @@ public class CourseController {
 
     private final CourseService courseService;
 
+    public CourseController(CourseService courseService) {
+        this.courseService = courseService;
+    }
+
     @GetMapping
     public ResponseEntity<List<Course>> getAllCourses(@RequestParam(required = false) String name){
         return new ResponseEntity<>(courseService.getAllCourses(name), OK);
